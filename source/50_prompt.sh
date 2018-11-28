@@ -70,32 +70,32 @@ function __prompt_git() {
 }
 
 # hg status.
-function __prompt_hg() {
-  __prompt_get_colors
-  local summary branch bookmark flags
-  summary="$(hg summary 2>/dev/null)"
-  [[ $? != 0 ]] && return 1;
-  branch="$(echo "$summary" | awk '/branch:/ {print $2}')"
-  bookmark="$(echo "$summary" | awk '/bookmarks:/ {print $2}')"
-  flags="$(
-    echo "$summary" | awk 'BEGIN {r="";a=""} \
-      /(modified)/     {r= "+"}\
-      /(unknown)/      {a= "?"}\
-      END {print r a}'
-  )"
-  __prompt_vcs_info=("$branch" "$bookmark" "$flags")
-}
+#function __prompt_hg() {
+#  __prompt_get_colors
+#  local summary branch bookmark flags
+#  summary="$(hg summary 2>/dev/null)"
+#  [[ $? != 0 ]] && return 1;
+#  branch="$(echo "$summary" | awk '/branch:/ {print $2}')"
+#  bookmark="$(echo "$summary" | awk '/bookmarks:/ {print $2}')"
+#  flags="$(
+#    echo "$summary" | awk 'BEGIN {r="";a=""} \
+#      /(modified)/     {r= "+"}\
+#      /(unknown)/      {a= "?"}\
+#      END {print r a}'
+#  )"
+#  __prompt_vcs_info=("$branch" "$bookmark" "$flags")
+#}
 
 # SVN info.
-function __prompt_svn() {
-  __prompt_get_colors
-  local info last current
-  info="$(svn info . 2> /dev/null)"
-  [[ ! "$info" ]] && return 1
-  last="$(echo "$info" | awk '/Last Changed Rev:/ {print $4}')"
-  current="$(echo "$info" | awk '/Revision:/ {print $2}')"
-  __prompt_vcs_info=("$last" "$current")
-}
+#function __prompt_svn() {
+#  __prompt_get_colors
+#  local info last current
+#  info="$(svn info . 2> /dev/null)"
+#  [[ ! "$info" ]] && return 1
+#  last="$(echo "$info" | awk '/Last Changed Rev:/ {print $4}')"
+#  current="$(echo "$info" | awk '/Revision:/ {print $2}')"
+#  __prompt_vcs_info=("$last" "$current")
+#}
 
 # Maintain a per-execution call stack.
 __prompt_stack=()
@@ -121,9 +121,9 @@ function __prompt_command() {
   # git: [branch:flags]
   __prompt_git || \
   # hg:  [branch:bookmark:flags]
-  __prompt_hg || \
+  #__prompt_hg || \
   # svn: [repo:lastchanged]
-  __prompt_svn
+  #__prompt_svn
   # Iterate over all vcs info parts, outputting an escaped var name that will
   # be interpolated automatically. This ensures that malicious branch names
   # can't execute arbitrary commands. For more info, see this PR:
