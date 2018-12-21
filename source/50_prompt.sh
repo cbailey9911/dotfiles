@@ -97,6 +97,15 @@ function __prompt_git() {
 #  __prompt_vcs_info=("$last" "$current")
 #}
 
+# Virtualenv Info
+__prompt_virtualenv() {
+  local virtualenv_path="$VIRTUAL_ENV"
+  if [[ -n $virtualenv_path ]]; then
+    #prompt_segment green black " $(basename $virtualenv_path)"
+    __prompt_vcs_info=("$virtualenv_path")
+  fi
+}
+
 # Maintain a per-execution call stack.
 __prompt_stack=()
 trap '__prompt_stack=("${__prompt_stack[@]}" "$BASH_COMMAND")' DEBUG
@@ -120,6 +129,8 @@ function __prompt_command() {
   __prompt_vcs_info=()
   # git: [branch:flags]
   __prompt_git || \
+  # virtualenv: [path]
+  __prompt_virtualenv
   # hg:  [branch:bookmark:flags]
   #__prompt_hg || \
   # svn: [repo:lastchanged]

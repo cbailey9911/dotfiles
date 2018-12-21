@@ -1,6 +1,7 @@
 paths=(
   ~/.local/bin
   $DOTFILES/bin
+  /Users/chrisbailey/Library/Python/2.7/bin
 )
 
 export PATH
