@@ -1,5 +1,3 @@
-complete -C '/usr/local/bin/aws_completer' aws
-
 get_aws_profile_parameter() {
   profile="${1?Please provide an AWS profile to configure.}"
   param="${2?Please provide a parameter to fetch.}"
@@ -27,3 +25,24 @@ load_aws_profile() {
 >&2 echo "INFO: Loading AWS environt variables for the default profile."
 >&2 echo "INFO: To change this, run 'load_aws_profile <your_profile>'."
 load_aws_profile "default"
+
+complete -C '/usr/local/bin/aws_completer' aws
+
+# Kitchen local aliases
+kitchen() {
+    if [[ $1 == "test" ]]; then
+        command bundle exec kitchen test
+    elif [[ $1 == "create" ]]; then
+        command bundle exec kitchen create
+    elif [[ $1 == "converge" ]]; then
+        command bundle exec kitchen converge
+    elif [[ $1 == "verify" ]]; then
+        command bundle exec kitchen verify
+    elif [[ $1 == "destroy" ]]; then
+        command bundle exec kitchen destroy
+    elif [[ $1 == "list" ]]; then
+        command bundle exec kitchen list
+    else
+        command bundle exec kitchen help
+    fi
+}
