@@ -46,3 +46,13 @@ kitchen() {
         command bundle exec kitchen help
     fi
 }
+
+# Confd Parameter Lookup
+confdlookup () {
+    filter="/"
+    if [[ -n $1 ]]
+    then
+        filter="$1"
+    fi
+    aws dynamodb scan --filter-expression 'begins_with (#K, :path)' --table-name confd-backend --projection-expression '#K,#V' --expression-attribute-names '#K=key,#V=value' --expression-attribute-values "{\":path\":{\"S\":\"${filter}\"}}" --query 'Items[].[key.S,value.S]' --output table
+}
