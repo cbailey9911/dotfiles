@@ -10,6 +10,11 @@ pip_packages=(
   powerline-status
   psutil
   tmuxp
+  awscli
+  awslogs
+  boto3
+  virtualenv
+  virtualenvwrapper
 )
 
 installed_pip_packages="$($pip_cmd list 2>/dev/null | awk '{print $1}')"
