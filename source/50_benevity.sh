@@ -42,6 +42,8 @@ kitchen() {
         command bundle exec kitchen destroy
     elif [[ $1 == "list" ]]; then
         command bundle exec kitchen list
+    elif [[ $1 == "login" ]]; then
+        command bundle exec kitchen login
     else
         command bundle exec kitchen help
     fi
@@ -55,4 +57,21 @@ confdlookup () {
         filter="$1"
     fi
     aws dynamodb scan --filter-expression 'begins_with (#K, :path)' --table-name confd-backend --projection-expression '#K,#V' --expression-attribute-names '#K=key,#V=value' --expression-attribute-values "{\":path\":{\"S\":\"${filter}\"}}" --query 'Items[].[key.S,value.S]' --output table
+}
+
+# Confd DynamoDB Put
+confdupdate () {
+	key=$1
+	value=$2
+	if [[ -z "$key" ]] || [[ -z "$value" ]]
+	then
+		echo "Must specify key and value"
+		return 1
+	fi
+	aws dynamodb put-item --table-name confd-backend --item "
+{
+  \"key\": {\"S\": \"$key\"},
+  \"value\": {\"S\": \"$value\"}
+}
+"
 }
