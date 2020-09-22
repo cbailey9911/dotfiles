@@ -43,7 +43,7 @@ kitchen() {
     elif [[ $1 == "list" ]]; then
         command bundle exec kitchen list
     elif [[ $1 == "login" ]]; then
-        command bundle exec kitchen login
+        command bundle exec kitchen login $2
     else
         command bundle exec kitchen help
     fi

@@ -2,7 +2,7 @@ paths=(
   ~/.local/bin
   $DOTFILES/bin
   /Users/chrisbailey/Library/Python/2.7/bin
-  /Users/chrisbailey/.rbenv/bin
+  /Users/chrisbailey/.rbenv/
 )
 
 export PATH
