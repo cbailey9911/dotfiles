@@ -16,3 +16,5 @@ function prompt_zero() {
   prompt_default
   PS1='$ '
 }
+
+export BASH_SILENCE_DEPRECATION_WARNING=1
